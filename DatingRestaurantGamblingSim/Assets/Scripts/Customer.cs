@@ -7,6 +7,8 @@ public class Customer : MonoBehaviour
     // Variables
     bool isSeated = false;
     bool doneActions = false;
+    bool exiting = false;
+    bool calledAngry = false;
     float fustrationTimer = 10f;
     float seatTimer = 5f;
     Vector3 targetSeat;
@@ -22,11 +24,12 @@ public class Customer : MonoBehaviour
     void CheckSeatValidity()
     {
         // If the target seat is already taken, find a new one
-        bool isAnyMoreSeatsLeft = Globals.chairPositions.Any(seat => Globals.takenChairs.Contains(seat));   // if bool true this means that globals.chairpositions is entirely contained in globals.takenChairs
-        if (isAnyMoreSeatsLeft)
+        bool isAnyMoreSeatsLeft = Globals.chairPositions.All(seat => Globals.takenChairs.Contains(seat));   // if bool true this means that globals.chairpositions is entirely contained in globals.takenChairs
+        if (isAnyMoreSeatsLeft && !calledAngry)
         {
             Debug.Log("No seats? *megamind meme*");
             StartCoroutine(AngryTimer());
+            calledAngry = true;
             return;
         }
         if (Globals.takenChairs.Contains(targetSeat))
@@ -34,7 +37,11 @@ public class Customer : MonoBehaviour
             // Grab another one
             int randomIndex = Random.Range(0, Globals.chairPositions.Count);
             targetSeat = Globals.chairPositions[randomIndex];
+        }
+        else
+        {
             StopAllCoroutines(); // nuke :3
+            calledAngry = false; // reset anger
         }
     }
 
@@ -43,13 +50,15 @@ public class Customer : MonoBehaviour
         yield return new WaitForSeconds(fustrationTimer);
         isSeated = false;
         GetComponent<SpriteRenderer>().color = Color.red;
+        doneActions = true;
         while (Vector3.Distance(transform.position, Globals.doorPosition) > 0.1f)
         {
             // Move towards the door
             transform.position = Vector3.MoveTowards(transform.position, Globals.doorPosition, Time.deltaTime * 2f);
             yield return null; // Wait for the next frame
         }
-        doneActions = true;
+        StopAllCoroutines();
+        exiting = true;
     }
 
     IEnumerator SeatTimer()
@@ -58,20 +67,22 @@ public class Customer : MonoBehaviour
         isSeated = false;
         Globals.takenChairs.Remove(targetSeat);
         Debug.Log("Customer left the seat.");
+        doneActions = true;
         while (Vector3.Distance(transform.position, Globals.doorPosition) > 0.1f)
         {
             // Move towards the door
             transform.position = Vector3.MoveTowards(transform.position, Globals.doorPosition, Time.deltaTime * 2f);
             yield return null; // Wait for the next frame
         }
-        doneActions = true;
+        StopAllCoroutines();
+        exiting = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         // Randomly walk to a chair position from Globals
-        if (!isSeated && Globals.chairPositions.Count > 0 && !Globals.takenChairs.Contains(targetSeat))
+        if (!isSeated && Globals.chairPositions.Count > 0 && !Globals.takenChairs.Contains(targetSeat) && !doneActions)
         {
             // Move towards the target position
             transform.position = Vector3.MoveTowards(transform.position, targetSeat, Time.deltaTime * 2f);
@@ -86,11 +97,11 @@ public class Customer : MonoBehaviour
                 StartCoroutine(SeatTimer());
             }
         }
-        if (!isSeated)
+        if (!isSeated && !doneActions && Globals.chairPositions.Count > 0)
         {
             CheckSeatValidity();
         }
-        if (doneActions)
+        if (exiting)
             {
                 // Destroy the customer object if they have left
                 Destroy(gameObject);
