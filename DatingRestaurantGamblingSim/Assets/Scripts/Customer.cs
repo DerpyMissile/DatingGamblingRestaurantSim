@@ -9,6 +9,7 @@ public class Customer : MonoBehaviour
     bool doneActions = false;
     bool exiting = false;
     bool calledAngry = false;
+    bool slowlyMakeRed = false;
     float fustrationTimer = 10f;
     float seatTimer = 5f;
     Vector3 targetSeat;
@@ -19,6 +20,8 @@ public class Customer : MonoBehaviour
         Debug.Log(Globals.chairPositions.Count);
         int randomIndex = Random.Range(0, Globals.chairPositions.Count);
         targetSeat = Globals.chairPositions[randomIndex];
+        int randomDoorIndex = Random.Range(0, Globals.doorPositions.Count);
+        Globals.doorPosition = Globals.doorPositions[randomDoorIndex];
     }
 
     void CheckSeatValidity()
@@ -47,9 +50,9 @@ public class Customer : MonoBehaviour
 
     IEnumerator AngryTimer()
     {
+        slowlyMakeRed = true;
         yield return new WaitForSeconds(fustrationTimer);
         isSeated = false;
-        GetComponent<SpriteRenderer>().color = Color.red;
         doneActions = true;
         while (Vector3.Distance(transform.position, Globals.doorPosition) > 0.1f)
         {
@@ -102,9 +105,21 @@ public class Customer : MonoBehaviour
             CheckSeatValidity();
         }
         if (exiting)
+        {
+            // Destroy the customer object if they have left
+            Destroy(gameObject);
+        }
+        if (slowlyMakeRed)
+        {
+            // Slowly change the color to red
+            Color currentColor = GetComponent<Renderer>().material.color;
+            currentColor.r = Mathf.Min(currentColor.r + Time.deltaTime * 0.1f, 1f);
+            GetComponent<Renderer>().material.color = currentColor;
+
+            if (currentColor.r >= 1f)
             {
-                // Destroy the customer object if they have left
-                Destroy(gameObject);
+                slowlyMakeRed = false; // Stop changing color once fully red
             }
+        }
     }
 }
