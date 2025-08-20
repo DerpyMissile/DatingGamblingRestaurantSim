@@ -13,6 +13,7 @@ public class Customer : MonoBehaviour
     float fustrationTimer = 10f;
     float seatTimer = 5f;
     Vector3 targetSeat;
+    Vector3 targetDoor;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,7 +22,7 @@ public class Customer : MonoBehaviour
         int randomIndex = Random.Range(0, Globals.chairPositions.Count);
         targetSeat = Globals.chairPositions[randomIndex];
         int randomDoorIndex = Random.Range(0, Globals.doorPositions.Count);
-        Globals.doorPosition = Globals.doorPositions[randomDoorIndex];
+        targetDoor = Globals.doorPositions[randomDoorIndex];
     }
 
     void CheckSeatValidity()
@@ -54,10 +55,10 @@ public class Customer : MonoBehaviour
         yield return new WaitForSeconds(fustrationTimer);
         isSeated = false;
         doneActions = true;
-        while (Vector3.Distance(transform.position, Globals.doorPosition) > 0.1f)
+        while (Vector3.Distance(transform.position, targetDoor) > 0.1f)
         {
             // Move towards the door
-            transform.position = Vector3.MoveTowards(transform.position, Globals.doorPosition, Time.deltaTime * 2f);
+            transform.position = Vector3.MoveTowards(transform.position, targetDoor, Time.deltaTime * 2f);
             yield return null; // Wait for the next frame
         }
         StopAllCoroutines();
@@ -71,10 +72,10 @@ public class Customer : MonoBehaviour
         Globals.takenChairs.Remove(targetSeat);
         Debug.Log("Customer left the seat.");
         doneActions = true;
-        while (Vector3.Distance(transform.position, Globals.doorPosition) > 0.1f)
+        while (Vector3.Distance(transform.position, targetDoor) > 0.1f)
         {
             // Move towards the door
-            transform.position = Vector3.MoveTowards(transform.position, Globals.doorPosition, Time.deltaTime * 2f);
+            transform.position = Vector3.MoveTowards(transform.position, targetDoor, Time.deltaTime * 2f);
             yield return null; // Wait for the next frame
         }
         StopAllCoroutines();
@@ -107,6 +108,7 @@ public class Customer : MonoBehaviour
         if (exiting)
         {
             // Destroy the customer object if they have left
+            Globals.currency += 10;
             Destroy(gameObject);
         }
         if (slowlyMakeRed)
