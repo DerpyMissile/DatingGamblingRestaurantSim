@@ -7,11 +7,7 @@ public static class Globals
     public static List<Vector3> chairPositions = new List<Vector3>();
     public static List<Vector3> takenChairs = new List<Vector3>();
     public static Vector3 doorPosition = new Vector3(0, 0, 0);
-    public static List<Vector3> doorPositions = new List<Vector3>(new Vector3[] {
-        new Vector3(0, 0, 0),
-        new Vector3(0, 4, 0),
-        new Vector3(0, -4, 0),
-    });
+    public static List<Vector3> doorPositions = new List<Vector3>();
     public static bool dayStarted = false;
     public static bool dayOver = false;
     public static int reputation = 999;
