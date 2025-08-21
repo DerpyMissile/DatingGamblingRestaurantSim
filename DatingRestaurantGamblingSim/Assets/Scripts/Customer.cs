@@ -18,6 +18,7 @@ public class Customer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Random.InitState(System.DateTime.Now.Millisecond); // Seed rng
         Debug.Log(Globals.chairPositions.Count);
         int randomIndex = Random.Range(0, Globals.chairPositions.Count);
         targetSeat = Globals.chairPositions[randomIndex];

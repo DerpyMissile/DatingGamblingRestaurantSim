@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ba60505ad215b4f9f833e8266ecc6b, type: 3}
+  m_Name: RoseFromTheMinersAssociation
+  m_EditorClassIdentifier: 
+  specialName: Rose From The Miner's Association
+  firstImpression: Woah what backwater town did she blow in from? She's covered in
+    dirt and muck and... whatever that orange thing on her gloves are. But she's
+    also HELLA MUSCULAR AND HOT BROOOOOOOO
+  currencyReward: 0
+  likeMeter: 50
+  image: {fileID: -2369867600477939372, guid: 9f3f2d2ce11dea84b9cd7ba5778cbe28, type: 3}
+  sprite: {fileID: -4085767354678634846, guid: b9599eaa6d2d7bc4681257ba3ea9d571, type: 3}
