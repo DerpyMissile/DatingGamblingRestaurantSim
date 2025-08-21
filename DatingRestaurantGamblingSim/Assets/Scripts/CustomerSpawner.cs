@@ -4,7 +4,8 @@ public class CustomerSpawner : MonoBehaviour
 {
     [Header("Objects in Scene")]
     public GameObject customerPrefab;
-    public GameObject[] specialCustomerPrefabs;
+    public GameObject specialCustomerPrefab;
+    public SpecialNPCData[] specialCustomers;
     // Private Variables
     private float spawnTimer = 0f;
     private float spawnInterval = 1f;
@@ -24,15 +25,24 @@ public class CustomerSpawner : MonoBehaviour
             float spawnRate = Random.Range(0, 0.01f * Globals.reputation);
             if (spawnTimer >= spawnInterval / spawnRate)
             {
-                int randomSpecialIndex = Random.Range(0, specialCustomerPrefabs.Length);
-                GameObject specialCustomerPrefab = specialCustomerPrefabs[randomSpecialIndex];
+                // int randomSpecialIndex = Random.Range(0, specialCustomers.Length);
+                // GameObject specialCustomerPrefab = specialCustomerPrefabs[randomSpecialIndex];
                 // GAMBLING TIME
-                GameObject customerToSpawn = Random.value < 0.03f ? specialCustomerPrefab : customerPrefab;
+                bool spawnSpecial = Random.value < 0.03f;
+                GameObject customerToSpawn = spawnSpecial ? specialCustomerPrefab : customerPrefab;
 
                 // Instantiate the customer at a random door
                 Vector3 spawnPosition = Globals.doorPositions[Random.Range(0, Globals.doorPositions.Count)];
 
-                Instantiate(customerToSpawn, spawnPosition, Quaternion.identity);
+                GameObject instance = Instantiate(customerToSpawn, spawnPosition, Quaternion.identity);
+
+                // Handle special NPC
+                if (spawnSpecial)
+                {
+                    int randIndex = Random.Range(0, specialCustomers.Length);
+                    SpecialNPCData chosenData = specialCustomers[randIndex];
+                    instance.GetComponent<SpecialCustomer>().Initialize(chosenData);
+                }
 
                 // Randomize spawn interval
                 spawnInterval = Random.Range(1f, 10f);

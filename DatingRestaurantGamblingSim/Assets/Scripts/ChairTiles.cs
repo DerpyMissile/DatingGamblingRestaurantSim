@@ -3,8 +3,6 @@ using UnityEngine.Tilemaps;
 
 public class ChairTiles : MonoBehaviour
 {
-    [Header("Objects In Scene")]
-    public Grid gridLayout;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -23,8 +21,6 @@ public class ChairTiles : MonoBehaviour
                     Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
                     Debug.Log("Tile position: " + tilemap.GetCellCenterWorld(new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0)));
                     Globals.chairPositions.Add(tilemap.GetCellCenterWorld(new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0)));
-                    // Debug.Log("Tile position: " + gridLayout.CellToWorld(new Vector3Int(x, y, 0)));
-                    // Globals.chairPositions.Add(gridLayout.CellToWorld(new Vector3Int(x, y, 0)));
                 }
             }
         }

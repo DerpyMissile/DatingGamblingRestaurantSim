@@ -6,7 +6,6 @@ public class DoorTiles : MonoBehaviour
     void Awake()
     {
         Tilemap tilemap = GetComponent<Tilemap>();
-        GridLayout gridLayout = tilemap.layoutGrid;
 
         BoundsInt bounds = tilemap.cellBounds;
         TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
@@ -18,10 +17,9 @@ public class DoorTiles : MonoBehaviour
                 TileBase tile = allTiles[x + y * bounds.size.x];
                 if (tile != null)
                 {
-                    // Debug.Log("Tile position: " + tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0)));
-                    // Globals.chairPositions.Add(tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0)));
-                    // Globals.doorPositions.Add(gridLayout.CellToWorld(new Vector3Int(x, y-2, 0)));
-                        // EY HAO REMEMBER TO UNCOMMENT THIS ONCE YOU GET CHAIRTILES WORKING FOR NOW DOOR POSITIONS ARE JUST HARDCODED
+                    Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
+                    Debug.Log("Tile position: " + tilemap.GetCellCenterWorld(new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0)));
+                    Globals.doorPositions.Add(tilemap.GetCellCenterWorld(new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0)));
                 }
             }
         }
