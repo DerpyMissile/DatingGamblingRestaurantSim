@@ -28,4 +28,5 @@ public static class Globals
     }
     public static DayOfWeek currentDay = DayOfWeek.Monday;
     public static int week = 1;
+    public static List<SpecialNPCData> inStore = new List<SpecialNPCData>(); // We don't wanna spawn in the guys we already have
 }
