@@ -3,11 +3,12 @@ using UnityEngine.Tilemaps;
 
 public class ChairTiles : MonoBehaviour
 {
+    [Header("Objects In Scene")]
+    public Grid gridLayout;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         Tilemap tilemap = GetComponent<Tilemap>();
-        GridLayout gridLayout = tilemap.layoutGrid;
 
         BoundsInt bounds = tilemap.cellBounds;
         TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
@@ -20,10 +21,10 @@ public class ChairTiles : MonoBehaviour
                 if (tile != null)
                 {
                     Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
-                    // Debug.Log("Tile position: " + tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0)));
-                    // Globals.chairPositions.Add(tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0)));
-                    Debug.Log("Tile position: " + gridLayout.CellToWorld(new Vector3Int(x, y, 0)));
-                    Globals.chairPositions.Add(gridLayout.CellToWorld(new Vector3Int(x, y-2, 0))); // idk why -2 works
+                    Debug.Log("Tile position: " + tilemap.GetCellCenterWorld(new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0)));
+                    Globals.chairPositions.Add(tilemap.GetCellCenterWorld(new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0)));
+                    // Debug.Log("Tile position: " + gridLayout.CellToWorld(new Vector3Int(x, y, 0)));
+                    // Globals.chairPositions.Add(gridLayout.CellToWorld(new Vector3Int(x, y, 0)));
                 }
             }
         }

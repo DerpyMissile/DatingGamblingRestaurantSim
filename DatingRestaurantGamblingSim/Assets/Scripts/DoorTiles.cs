@@ -18,11 +18,10 @@ public class DoorTiles : MonoBehaviour
                 TileBase tile = allTiles[x + y * bounds.size.x];
                 if (tile != null)
                 {
-                    Debug.Log("x:" + x + " y:" + y + " tile:" + tile.name);
                     // Debug.Log("Tile position: " + tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0)));
                     // Globals.chairPositions.Add(tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0)));
-                    Debug.Log("Tile position: " + gridLayout.CellToWorld(new Vector3Int(x, y, 0)));
-                    Globals.doorPositions.Add(gridLayout.CellToWorld(new Vector3Int(x, y-2, 0))); // idk why -2 works
+                    // Globals.doorPositions.Add(gridLayout.CellToWorld(new Vector3Int(x, y-2, 0)));
+                        // EY HAO REMEMBER TO UNCOMMENT THIS ONCE YOU GET CHAIRTILES WORKING FOR NOW DOOR POSITIONS ARE JUST HARDCODED
                 }
             }
         }
