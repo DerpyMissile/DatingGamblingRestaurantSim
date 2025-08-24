@@ -81,6 +81,7 @@ public class Customer : MonoBehaviour
         }
         StopAllCoroutines();
         exiting = true;
+        Globals.currency += 10;
     }
 
     // Update is called once per frame
@@ -109,7 +110,6 @@ public class Customer : MonoBehaviour
         if (exiting)
         {
             // Destroy the customer object if they have left
-            Globals.currency += 10;
             Destroy(gameObject);
         }
         if (slowlyMakeRed)
