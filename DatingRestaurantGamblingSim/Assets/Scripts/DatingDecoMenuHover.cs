@@ -1,41 +1,40 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class DatingDecoMenuHover : MonoBehaviour {
-    [SerializeField] bool showing = false;
-    [SerializeField] bool expanded = false;
-
-    [SerializeField] Vector3 menu_hidden_position;
-    [SerializeField] Vector3 menu_activated_position;
-
-    Transform menu_transform;
+public class DatingDecoMenuHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+    Slide slider;
+    GameObject expandedMenu;
+    GameObject expandedButton; // the options for decor and stuff
 
     void Awake() {
-        menu_transform = GameObject.Find("Menu/Background").GetComponent<Transform>();
-        menu_transform.localPosition = menu_hidden_position;
+        slider = GetComponent<Slide>();
+        expandedMenu = GameObject.Find("ExpandedMenu");
+        expandedButton = GameObject.Find("Button_DecorOption");
+
+        expandedMenu.SetActive(false);
+        expandedButton.SetActive(false);
     }
 
-    void Start() {
-        //
+    public void OnPointerEnter(PointerEventData eventData) {
+        slider.ToggleEaseOut();
     }
 
-    void Update() {
-        //
+    public void OnPointerExit(PointerEventData eventData) {
+        slider.ToggleEaseOut();
+        ToggleExpand();
+        // KillButtons();
     }
 
-    void OnMouseEnter() {
-        Debug.Log("hovering menu");
-        showing = true;
-        
+    public void ToggleExpand() {
+        expandedMenu.SetActive(!expandedMenu.activeSelf);
+        if(expandedMenu.activeSelf) {
+            SpawnButtons();
+        }
     }
 
-    void OnMouseExit() {
-        Debug.Log("stopped hovering menu");
-        showing = false;
+    private void SpawnButtons() {
+        foreach ( var item in BurnerInventory.decorInventory ) {
+            Debug.Log("spawn button");
+        }
     }
-
-    void OnGUI() {
-        
-    }
-    
-    
 }

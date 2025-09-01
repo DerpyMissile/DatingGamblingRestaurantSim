@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Flowers
+  m_EditorClassIdentifier: Assembly-CSharp::Decor
+  itemName: Flowers
+  desc: A vase of terrible flowers.
+  icon: {fileID: -3669751957743689551, guid: 8bf1f1a6f2567854897b1ee1d641868e, type: 3}
+  types: 01000000
+  themes: 

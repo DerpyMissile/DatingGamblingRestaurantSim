@@ -1,63 +1,65 @@
 // using System.Collections;
 // using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image; // ????
 
 public class DatingDeco : MonoBehaviour {
-	private int bg_index = 0;
-	private int deco_l_index = 0;
-	private int deco_r_index = 0;
-	private int table_index = 0;
+	private int bgIndex = 0;
+	private int decoLIndex = 0;
+	private int decoRIndex = 0;
+	private int tableIndex = 0;
 
-	[SerializeField] public Sprite[] bg_sprites; // snake case (grin)
-	[SerializeField] public Sprite[] deco_sprites;
-	[SerializeField] public Sprite[] food_sprites;
-	[SerializeField] public Sprite[] table_sprites;
+	[SerializeField] public Sprite[] bgSprites; // snake case (grin)
+	[SerializeField] public Sprite[] decoSprites;
+	[SerializeField] public Sprite[] foodSprites;
+	[SerializeField] public Sprite[] tableSprites;
 
-	private SpriteRenderer bg_renderer;
-	private SpriteRenderer deco_l_renderer;
-	private SpriteRenderer deco_r_renderer;
-	private SpriteRenderer table_renderer;
+	private Image bgRenderer;
+	private Image decoLRenderer;
+	private Image decoRRenderer;
+	private Image tableRenderer;
 
 	void Awake() {
-		load_renderers();
+		LoadRenderers();
 	}
 	
     void Start() {
-		draw();
+		Draw();
 	}
 
-	void load_renderers() {
-		bg_renderer = GameObject.Find("Scene/Background/Wall").GetComponent<SpriteRenderer>();
-		deco_l_renderer = GameObject.Find("Scene/Foreground/Decoration (Left)").GetComponent<SpriteRenderer>();
-		deco_r_renderer = GameObject.Find("Scene/Foreground/Decoration (Right)").GetComponent<SpriteRenderer>();
-		table_renderer = GameObject.Find("Scene/Foreground/Table").GetComponent<SpriteRenderer>();
+	void LoadRenderers() {
+		bgRenderer = GameObject.Find("Scene (Canvas)/Background/Wall").GetComponent<Image>();
+		decoLRenderer = GameObject.Find("Scene (Canvas)/Foreground/Decoration (Left)").GetComponent<Image>();
+		decoRRenderer = GameObject.Find("Scene (Canvas)/Foreground/Decoration (Right)").GetComponent<Image>();
+		tableRenderer = GameObject.Find("Scene (Canvas)/Foreground/Table").GetComponent<Image>();
 	}
 
-	void draw() {
-		bg_renderer.sprite = bg_sprites[bg_index];
-		deco_l_renderer.sprite = deco_sprites[deco_l_index];
-		deco_r_renderer.sprite = deco_sprites[deco_r_index];
-		table_renderer.sprite = table_sprites[table_index];
+	void Draw() {
+		bgRenderer.sprite = bgSprites[bgIndex];
+		decoLRenderer.sprite = decoSprites[decoLIndex];
+		decoRRenderer.sprite = decoSprites[decoRIndex];
+		tableRenderer.sprite = tableSprites[tableIndex];
 	}
 
-	public void change_bg() { // TODO: this
-		bg_index = (bg_index + 1) % bg_sprites.Length;
-		draw();
+	public void ChangeBg() { // TODO: this
+		bgIndex = (bgIndex + 1) % bgSprites.Length;
+		Draw();
 	}
 
-	public void change_deco_l() {
-		deco_l_index = (deco_l_index + 1) % deco_sprites.Length;
-		draw();
+	public void changeDecoL() {
+		decoLIndex = (decoLIndex + 1) % decoSprites.Length;
+		Draw();
 	}
 
-	public void change_deco_r() {
-		deco_r_index = (deco_r_index + 1) % deco_sprites.Length;
-		draw();
+	public void changeDecoR() {
+		decoRIndex = (decoRIndex + 1) % decoSprites.Length;
+		Draw();
 	}
 
-	public void change_table() {
-		table_index = (table_index + 1) % table_sprites.Length;
-		draw();
+	public void changeTable() {
+		tableIndex = (tableIndex + 1) % tableSprites.Length;
+		Draw();
 	}	
 }
 
